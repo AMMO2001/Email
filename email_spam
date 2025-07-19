@@ -3,6 +3,10 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 
+load_dotenv(dotenv_path=Path("env.env"))
+EMAIL_USER = os.getenv("EMAIL_USER")
+EMAIL_PASS = os.getenv("EMAIL_PASS")
+
 head = """
 From: %sender%
 To: %recipient%
@@ -27,34 +31,29 @@ email_text = r"""Привет, %friend_name%! %my_name% приглашает т�
 Регистрируйся → %website%  
 На курсы, которые еще не вышли, можно подписаться и получить уведомление о релизе сразу на имейл."""
 
-login = EMAIL_USER
-password = EMAIL_PASS
-
 sender = EMAIL_USER
-recipient = "f4winter@yandex.ru"
-friend_name = "Илья"
+recipient = "avc@bk.ru"
+friend_name = "Владимир"
 my_name = "Devman"
 url = "https://dvmn.org/referrals/O4w62S83RdL7taQOLhpAbfnnOJtFhQndmLAxHndr/"
 
 def head_replace(sender, recipient):
     head_replaced = head
-    head_replaced = result.replace("%sender%", str(sender))
-    head_replaced = result.replace("%recipient%", str(recipient))
+    head_replaced = head_replaced.replace("%sender%", str(sender))
+    head_replaced = head_replaced.replace("%recipient%", str(recipient))
     return head_replaced
 
 def email_text_replace(friend_name, my_name, url):
     text_replaced = email_text
-    text_replaced = result.replace("%friend_name%", friend_name)
-    text_replaced = result.replace("%my_name%", my_name)
-    text_replaced = result.replace("%website%", url)
+    text_replaced = text_replaced.replace("%friend_name%", friend_name)
+    text_replaced = text_replaced.replace("%my_name%", my_name)
+    text_replaced = text_replaced.replace("%website%", url)
     return text_replaced
 
-message = f"{head_replace(str(sender), recipient)}\n{email_text_replace(friend_name, my_name, url)}"
+message = f"{head_replace(sender, recipient)}\n{email_text_replace(friend_name, my_name, url)}"
 
-load_dotenv(dotenv_path=Path("env.py"))
-
-EMAIL_USER = os.getenv("EMAIL_USER")
-EMAIL_PASS = os.getenv("EMAIL_PASS")
+login = EMAIL_USER
+password = EMAIL_PASS
 
 email_from = sender
 email_to = recipient

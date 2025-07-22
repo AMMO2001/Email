@@ -7,8 +7,7 @@ load_dotenv(dotenv_path=Path("env.env"))
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASS = os.getenv("EMAIL_PASS")
 
-head = """
-From: %sender%
+head = """From: %sender%
 To: %recipient%
 Subject: Приглашение!
 Content-Type: text/plain; charset="UTF-8";
@@ -62,5 +61,3 @@ server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 server.login(login, password)
 server.sendmail(email_from, email_to, message.encode('utf-8'))
 server.quit()
-
-print("Письмо успешно отправлено!")
